@@ -45,7 +45,7 @@ class _AddoreditnotesState extends State<Addoreditnotes> {
                 items: priorities.map((String X) {
                   return DropdownMenuItem<String>(value: X, child: Text(X));
                 }).toList(),
-                value: getpriorityasString(note.priority),
+                value: getpriorityasString(note.priority!),
                 onChanged: (changed) {
                   setState(() {
                     updatepriorityasInt(changed);
@@ -121,7 +121,7 @@ class _AddoreditnotesState extends State<Addoreditnotes> {
   }
 
   String getpriorityasString(int value) {
-    String priority;
+    String? priority;
     switch (value) {
       case 1:
         priority = priorities[0];
@@ -130,7 +130,7 @@ class _AddoreditnotesState extends State<Addoreditnotes> {
         priority = priorities[1];
         break;
     }
-    return priority;
+    return priority!;
   }
 
   void save() async {
@@ -140,7 +140,7 @@ class _AddoreditnotesState extends State<Addoreditnotes> {
     if (note.id != null) {
       result = await helper.updateNote(note);
     } else {
-      await helper.insertNote(note);
+      result = await helper.insertNote(note);
     }
     if (result != 0) {
       _showAlertDialog('Status', 'Note Saved Successfully');

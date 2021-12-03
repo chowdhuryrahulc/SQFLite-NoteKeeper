@@ -67,6 +67,7 @@ class DatabaseHelper {
   Future<int> insertNote(Note note) async {
     Database db = await this.database;
     var result = await db.insert(noteTable, note.toMap());
+    print(result);
     return result;
   }
 
@@ -96,7 +97,7 @@ class DatabaseHelper {
   }
 
   // Get the 'Map List' [ List<Map> ] and convert it to 'Note List' [ List<Note> ]
-  Future<List<Note>> getNoteList() async {
+  Future<List<Note>> getNoteList(Note note) async {
     var noteMapList = await getNoteMapList(); // Get 'Map List' from database
     int count =
         noteMapList.length; // Count the number of map entries in db table
@@ -104,7 +105,7 @@ class DatabaseHelper {
     List<Note> noteList = <Note>[];
     // For loop to create a 'Note List' from a 'Map List'
     for (int i = 0; i < count; i++) {
-      noteList.add(Note.fromMapObject(noteMapList[i]));
+      noteList.add(note.fromMapObject(noteMapList[i]));
     }
 
     return noteList;

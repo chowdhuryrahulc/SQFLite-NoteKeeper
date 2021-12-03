@@ -36,11 +36,11 @@ class _NotespageState extends State<Notespage> {
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor:
-                      getPriorityColor(this.noteList[position].priority),
-                  child: getPriorityIcon(this.noteList[position].priority),
+                      getPriorityColor(this.noteList[position].priority!),
+                  child: getPriorityIcon(this.noteList[position].priority!),
                 ),
-                title: Text(this.noteList[position].title),
-                subtitle: Text(this.noteList[position].date),
+                title: Text(this.noteList[position].title!),
+                subtitle: Text(this.noteList[position].date!),
                 trailing: GestureDetector(
                     child: Icon(Icons.delete),
                     onTap: () {
@@ -56,7 +56,7 @@ class _NotespageState extends State<Notespage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          navigateToDetail(Note('', '', 2,''), 'Add Note');
+          navigateToDetail(Note('', '', 2, ''), 'Add Note');
         },
         tooltip: "Add Notes",
         child: Icon(Icons.add),
@@ -96,15 +96,15 @@ class _NotespageState extends State<Notespage> {
       SnackBar(
         content: Text('Note Deleated Successfully'),
       );
-      updateListView();
+      updateListView(note);
     }
   }
 
-  void updateListView() {
+  void updateListView(Note note) {
     //Singleton instance of Database
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<Note>> noteListFuture = databaseHelper.getNoteList();
+      Future<List<Note>> noteListFuture = databaseHelper.getNoteList(note);
       noteListFuture.then((noteList) {
         setState(() {
           this.noteList = noteList;

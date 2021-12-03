@@ -3,10 +3,10 @@
 
 class Note {
   int? _id;
-  String _title;
-  String _description;
-  String _date;
-  int _priority;
+  String? _title;
+  String? _description;
+  String? _date;
+  int? _priority;
 
 //Constructor with optional description
   Note(this._title, this._date, this._priority, this._description);
@@ -16,33 +16,33 @@ class Note {
 
 //Getters
   int? get id => _id;
-  String get title => _title;
-  String get date => _date;
-  String get description => _description;
-  int get priority => _priority;
+  String? get title => _title;
+  String? get date => _date;
+  String? get description => _description;
+  int? get priority => _priority;
 
 //Setters [id setter not required bcoz it is self generated]
-  set title(String newTitle) {
-    if (newTitle.length <= 255) {
+  set title(String? newTitle) {
+    if (newTitle!.length <= 255) {
       //Validation layer
       this._title = newTitle;
     }
   }
 
-  set date(String newDate) {
-    if (newDate.length <= 255) {
+  set date(String? newDate) {
+    if (newDate!.length <= 255) {
       this._date = newDate;
     }
   }
 
-  set description(String newDescription) {
-    if (newDescription.length <= 255) {
+  set description(String? newDescription) {
+    if (newDescription!.length <= 255) {
       this._description = newDescription;
     }
   }
 
-  set priority(int newPriority) {
-    if (newPriority >= 1 && newPriority <= 2) {
+  set priority(int? newPriority) {
+    if (newPriority! >= 1 && newPriority <= 2) {
       this._priority = newPriority;
     }
   }
@@ -65,12 +65,13 @@ class Note {
   }
 
   //before Retrieving data you must convert Map obj to Note obj
-  Note.fromMapObject(Map<String, dynamic> map) {
+  Note fromMapObject(Map<String, dynamic> map) {
     //Named Constructor
     this._id = map['id'];
     this._description = map['description'];
     this._title = map['title'];
     this._priority = map['priority'];
     this._date = map['date'];
+    return Note(_title, _date, _priority, _description);
   }
 }
